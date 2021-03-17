@@ -52,12 +52,15 @@
 											
 											</c:if>
 										            
-										            
-								<!--
-									<div class="alert alert-success col-xs-offset-1 col-xs-10">
-										You have been logged out.
-									</div>
-								-->
+										    
+											<!-- check if logged out -->		    
+										  <c:if test="${param.logout != null }">
+								
+												<div class="alert alert-success col-xs-offset-1 col-xs-10">
+													You have been logged out.
+												</div>
+								
+											</c:if>
 
 					            </div>
 					        </div>
@@ -83,6 +86,12 @@
 								<button type="submit" class="btn btn-success">Login</button>
 							</div>
 						</div>
+						
+						<!-- Manually add token, must change form:form to just form -->
+						<!-- 
+						<input type="hidden" name="${_csrf.parameterName}" value="${_ssrf.token}" />
+						-->
+
 
 					</form:form>
 

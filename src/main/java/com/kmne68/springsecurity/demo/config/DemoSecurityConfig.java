@@ -33,7 +33,7 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
 		UserBuilder users = User.withDefaultPasswordEncoder();
 		
 		auth.inMemoryAuthentication()
-		.withUser(users.username("Gandalf").password("test123").roles("Grey Wizard"))
+		.withUser(users.username("Gandalf").password("test123").roles("Grey Wizard", "White Wizard"))
 		.withUser(users.username("Saruman").password("test123").roles("White Wizard"))
 		.withUser(users.username("Radagast").password("test123").roles("Brown Wizard"));
 		
@@ -44,12 +44,16 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 
 		http.authorizeRequests()
-		.anyRequest().authenticated()
+		.antMatchers("/").hasRole("Brown Wizard")
+		.antMatchers("/").hasRole("White Wizard")
+		.antMatchers("/leaders/**").hasRole("Grey Wizard")
 		.and()
 		.formLogin()
 		.loginPage("/showLoginPage")
 		.loginProcessingUrl("/authenticateUser")
-		.permitAll();
+		.permitAll()
+		.and()
+		.logout().permitAll();
 		
 	}
 
