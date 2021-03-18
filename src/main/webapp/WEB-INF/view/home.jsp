@@ -26,6 +26,12 @@
 		<a href="${pageContext.request.contextPath}/leaders">Leadership Meeting</a>
 	</p>
 	
+	<!--  Add a link to /systems -->
+	<p>
+		<a href="${pageContext.request.contextPath}/systems">IT Systems Meeting</a>
+		For Admins.
+	</p>
+	
 	<form:form action="${pageContext.request.contextPath}/logout" method="POST">
 	
 	<input type="submit" value="Logout" />	
