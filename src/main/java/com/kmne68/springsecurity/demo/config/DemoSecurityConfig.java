@@ -44,16 +44,19 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 
 		http.authorizeRequests()
-		.antMatchers("/").hasRole("White Wizard")
-		.antMatchers("/systems").hasRole("Brown Wizar")
+		.antMatchers("/").hasRole("Brown Wizard")
 		.antMatchers("/leaders/**").hasRole("Grey Wizard")
+		.antMatchers("/systems/**").hasRole("White Wizard")
 		.and()
 		.formLogin()
 		.loginPage("/showLoginPage")
 		.loginProcessingUrl("/authenticateUser")
 		.permitAll()
 		.and()
-		.logout().permitAll();
+		.logout().permitAll()
+		.and()
+		.exceptionHandling()
+		.accessDeniedPage("/access-denied");
 		
 	}
 
