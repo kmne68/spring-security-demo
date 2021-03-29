@@ -17,7 +17,7 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
-	//	UserBuilder users = User.withDefaultPasswordEncoder();
+	UserBuilder users = User.withDefaultPasswordEncoder();
 		
 		/*
 		auth.inMemoryAuthentication()
@@ -30,12 +30,12 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
 		.withUser("Radagast").password("test123").roles("Brown Wizard");
 		*/
 		
-		UserBuilder users = User.withDefaultPasswordEncoder();
+//		UserBuilder users = User.withDefaultPasswordEncoder();
 		
 		auth.inMemoryAuthentication()
-		.withUser(users.username("Gandalf").password("test123").roles("Grey Wizard", "White Wizard"))
-		.withUser(users.username("Saruman").password("test123").roles("White Wizard"))
-		.withUser(users.username("Radagast").password("test123").roles("Brown Wizard"));
+		.withUser(users.username("john").password("test123").roles("EMPLOYEE"))
+		.withUser(users.username("mary").password("test123").roles("EMPLOYEE", "MANAGER"))
+		.withUser(users.username("susan").password("test123").roles("EMPLOYEE", "ADMIN"));
 		
 	}
 
@@ -44,9 +44,9 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 
 		http.authorizeRequests()
-		.antMatchers("/").hasRole("Brown Wizard")
-		.antMatchers("/leaders/**").hasRole("Grey Wizard")
-		.antMatchers("/systems/**").hasRole("White Wizard")
+		.antMatchers("/").hasRole("EMPLOYEE")
+		.antMatchers("/leaders/**").hasRole("MANAGER")
+		.antMatchers("/systems/**").hasRole("ADMIN")
 		.and()
 		.formLogin()
 		.loginPage("/showLoginPage")
@@ -55,8 +55,7 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
 		.and()
 		.logout().permitAll()
 		.and()
-		.exceptionHandling()
-		.accessDeniedPage("/access-denied");
+		.exceptionHandling().accessDeniedPage("/access-denied");
 		
 	}
 

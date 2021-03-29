@@ -21,16 +21,21 @@
 		Role(s): <security:authentication property="principal.authorities"/>
 	</p>
 	
+	
+<security:authorize access="hasRole('MANAGER')">
 	<!-- Add a link to /leaders -->
 	<p>
 		<a href="${pageContext.request.contextPath}/leaders">Leadership Meeting</a>
 	</p>
+</security:authorize>
 	
+<security:authorize access="hasRole('ADMIN')">
 	<!--  Add a link to /systems -->
 	<p>
 		<a href="${pageContext.request.contextPath}/systems">IT Systems Meeting</a>
-		For Admins.
+		This content is only for system admins.
 	</p>
+</security:authorize>
 	
 	<form:form action="${pageContext.request.contextPath}/logout" method="POST">
 	
